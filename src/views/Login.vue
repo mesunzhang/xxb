@@ -1,24 +1,28 @@
 <template>
-  <van-form @submit="onSubmit">
+  <van-form @submit="onSubmit" class="mt-14 h-fit">
+    <h1 class="mb-14 text-center text-xl font-bold text-slate-900">用户登录</h1>
     <van-cell-group inset>
       <van-field
-          v-model="username"
-          name="用户名"
-          label="用户名"
-          placeholder="用户名"
-          :rules="[{ required: true, message: '请填写用户名' }]"
+        v-model="form.name"
+        :rules="[{ required: true, message: '请填写用户名' }]"
+        label="用户名"
+        name="用户名"
+        placeholder="用户名"
       />
       <van-field
-          v-model="password"
-          type="password"
-          name="密码"
-          label="密码"
-          placeholder="密码"
-          :rules="[{ required: true, message: '请填写密码' }]"
+        v-model="form.pwd"
+        :rules="[{ required: true, message: '请填写密码' }]"
+        label="密码"
+        name="密码"
+        placeholder="密码"
+        :type="showPwdFlag?'':'password'"
+        :right-icon="showPwdFlag?'eye-o':'closed-eye'"
+        @click-right-icon="showPwd"
+        class="cursor-pointer"
       />
     </van-cell-group>
-    <div style="margin: 16px;">
-      <van-button block type="primary" native-type="submit">
+    <div class="m-auto mt-8 w-60">
+      <van-button block native-type="submit" type="success">
         提交
       </van-button>
     </div>
@@ -26,14 +30,21 @@
 
 </template>
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref } from "vue";
+import { login } from "../request/login.services";
 
-const username = ref('')
-const password = ref('');
+const showPwdFlag = ref(false);
+const form = reactive({
+  name: "",
+  pwd: ""
+});
 const onSubmit = (values) => {
-  console.log('submit', values);
+  login(form);
 };
 
+function showPwd() {
+  showPwdFlag.value = !showPwdFlag.value;
+}
 
 </script>
 <style>

@@ -1,7 +1,7 @@
 <template>
-  <van-form @submit="onSubmit" class="mt-14 h-fit">
+  <van-form @submit="onSubmit" class="h-fit pt-28">
     <h1 class="mb-14 text-center text-xl font-bold text-slate-900">用户登录</h1>
-    <van-cell-group inset>
+    <van-cell-group inset class="bg-transparent p-4">
       <van-field
         v-model="form.name"
         :rules="[{ required: true, message: '请填写用户名' }]"
@@ -21,10 +21,11 @@
         class="cursor-pointer"
       />
     </van-cell-group>
-    <div class="m-auto mt-8 w-60">
-      <van-button block native-type="submit" type="success">
+    <div class="m-auto mt-8 w-60 text-center">
+      <van-button round native-type="submit" type="primary" :loading="loading" loading-text="提交" class="w-full">
         提交
       </van-button>
+      <div class="mt-4 text-sm underline underline-offset-2	text-purple-600">免费注册</div>
     </div>
   </van-form>
 
@@ -32,14 +33,21 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { login } from "../request/login.services";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const showPwdFlag = ref(false);
+const loading = ref(false);
 const form = reactive({
   name: "",
   pwd: ""
 });
-const onSubmit = (values) => {
-  login(form);
+
+async function onSubmit() {
+  loading.value = true;
+  await login(form);
+  loading.value = false;
+  router.push("/");
 };
 
 function showPwd() {
@@ -47,12 +55,21 @@ function showPwd() {
 }
 
 </script>
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+<style lang="less" scoped>
+.van-cell-group--inset {
+  border-radius: 16px 16px 0 0;
+  background: linear-gradient(to bottom, #fad7fa, #fbf9ff);
+}
+.van-cell {
+  background: transparent;
+  &:after {
+    border-color: #9c53e1;
+  }
+  &:last-of-type {
+    &:after {
+      border-bottom: 0;
+    }
   }
 }
+
 </style>

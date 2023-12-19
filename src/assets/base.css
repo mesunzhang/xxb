@@ -36,6 +36,13 @@
     --section-gap: 160px;
 }
 
+:root:root {
+    --van-button-primary-background: linear-gradient(270deg, #da3ada, #9c53e1);
+    --van-button-primary-border-color: linear-gradient(270deg, #da3ada, #9c53e1);
+    /*--van-primary-color: #6803c8;*/
+    /*--van-field-label-color: #6803c8*/
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --color-background: var(--vt-c-black);
@@ -74,9 +81,9 @@ body {
     background: var(--color-background);
     transition: color 0.5s,
     background-color 0.5s;
-    line-height: 1.6;
+    line-height: 1.5;
     font-family: 'Maison Neue', 'Janson Text', 'Pingfang SC', 'SimSun', 'Noto Serif', 'Noto Serif CJK SC', serif;
-    font-size: 15px;
+    font-size: 16px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

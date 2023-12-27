@@ -4,7 +4,9 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
-import { ConfigProvider, Button, Form, Field, CellGroup } from "vant";
+import {
+  ConfigProvider, Button, Form, Field, CellGroup,
+} from "vant";
 import "vant/lib/index.css";
 
 const app = createApp(App);

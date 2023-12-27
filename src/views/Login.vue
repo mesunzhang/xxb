@@ -32,8 +32,8 @@
 </template>
 <script setup>
 import { reactive, ref } from "vue";
-import { login } from "../request/login.services";
 import { useRouter } from "vue-router";
+import { login } from "../request/main.services";
 
 const router = useRouter();
 const showPwdFlag = ref(false);
@@ -44,9 +44,7 @@ const form = reactive({
 });
 
 async function onSubmit() {
-  loading.value = true;
   await login(form);
-  loading.value = false;
   router.push("/");
 };
 

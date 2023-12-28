@@ -5,7 +5,7 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 import {
-  ConfigProvider, Button, Form, Field, CellGroup,
+  ConfigProvider, Button, Form, Field, CellGroup,NumberKeyboard
 } from "vant";
 import "vant/lib/index.css";
 
@@ -18,5 +18,6 @@ app.use(Button);
 app.use(Form);
 app.use(Field);
 app.use(CellGroup);
+app.use(NumberKeyboard);
 
 app.mount("#app");

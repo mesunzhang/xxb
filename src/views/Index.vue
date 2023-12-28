@@ -9,14 +9,24 @@
   <div class="text-center text-sm">
     <p class="mb-2">体验截止时间：{{ userInfo.vipFreeEndDay }}</p>
   </div>
-  <van-field v-model="customStep" label="" type="digit" input-align="center"
-             placeholder="自定义步数" />
+  <van-field v-model="customStep" readonly clickable @touchstart.stop="show = true" input-align="center"
+             class="text-lg" />
+  <van-number-keyboard
+    v-model="customStep"
+    :show="show"
+    :maxlength="6"
+    theme="custom"
 
+    close-button-text="完成"
+
+    @blur="show = false"
+    @close="closeHandle"
+  />
   <div class="p-4 text-center">
-    <div class="flex flex-wrap justify-center">
+    <div class="flex flex-wrap justify-evenly">
       <div v-for="(i,idx) in steps"
            :key="idx" @click="clickHandle(i)"
-           class="mx-2 mb-4 cursor-pointer rounded-3xl bg-gradient-to-b from-purple-200 to-fuchsia-300 p-4 text-black border-2	border-purple-300	"
+           class="mx-2 mb-4 cursor-pointer rounded-2xl bg-gradient-to-b from-purple-200 to-fuchsia-300 p-2 text-black border-2	border-purple-300"
       >{{ i }}步
       </div>
     </div>
@@ -33,6 +43,7 @@ const userStore = useUserStore();
 const userInfo = computed(() => userStore.info || {});
 const steps = ref([]);
 const customStep = ref();
+const show = ref(false);
 init();
 
 async function init() {
@@ -43,6 +54,10 @@ async function init() {
 
 async function clickHandle(step) {
   await setStep({ step });
+}
+
+function closeHandle() {
+  clickHandle(customStep.value);
 }
 </script>
 <script lang="ts">

@@ -10,15 +10,13 @@
     <p class="mb-2">体验截止时间：{{ userInfo.vipFreeEndDay }}</p>
   </div>
   <van-field v-model="customStep" readonly clickable @touchstart.stop="show = true" input-align="center"
-             class="text-lg" />
+             class="text-lg" placeholder="自定义步数" />
   <van-number-keyboard
     v-model="customStep"
     :show="show"
     :maxlength="6"
     theme="custom"
-
     close-button-text="完成"
-
     @blur="show = false"
     @close="closeHandle"
   />
@@ -26,24 +24,25 @@
     <div class="flex flex-wrap justify-evenly">
       <div v-for="(i,idx) in steps"
            :key="idx" @click="clickHandle(i)"
-           class="mx-2 mb-4 cursor-pointer rounded-2xl bg-gradient-to-b from-purple-200 to-fuchsia-300 p-2 text-black border-2	border-purple-300"
+           class=" flex-auto min-w-1/5 mx-2 mb-4 cursor-pointer rounded-2xl bg-gradient-to-b from-purple-200 to-fuchsia-300 p-2 text-black border-2	border-purple-300"
       >{{ i }}步
       </div>
     </div>
   </div>
-  <!--  <pay-modal ref="payModalRef"></pay-modal>-->
+  <step-modal ref="stepModalRef"></step-modal>
 </template>
 <script setup lang="ts">
 import { useUserStore } from "@/stores";
 import { computed, ref } from "vue";
 import { getStepList, setStep } from "@/request/main.services";
-// import PayModal from "@/components/PayModal.vue";
+import StepModal from "@/components/StepModal.vue";
 
 const userStore = useUserStore();
 const userInfo = computed(() => userStore.info || {});
 const steps = ref([]);
 const customStep = ref();
 const show = ref(false);
+const stepModalRef = ref();
 init();
 
 async function init() {
@@ -53,6 +52,7 @@ async function init() {
 }
 
 async function clickHandle(step) {
+  await stepModalRef.value.init();
   await setStep({ step });
 }
 
